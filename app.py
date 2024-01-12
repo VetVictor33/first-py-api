@@ -14,4 +14,16 @@ def create_book():
   books.append(new_book)
   return jsonify(books)
 
+@app.route('/books', methods=['GET'])
+def read_books():
+  return jsonify(books)
+
+@app.route('/books/<int:id>', methods=['PUT'])
+def update_books(id):
+  altered_book = request.get_json()
+  for index, book in enumerate(books):
+    if str(book.get('id')) == str(id):
+      books[index].update(altered_book)
+  return jsonify(books)
+
 app.run(port=5000, host='localhost', debug=True)
